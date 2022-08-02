@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sell',
     'rest_framework',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
