@@ -8,6 +8,9 @@ django = "*"
 djangorestframework = "*"
 psycopg2-binary = "*"
 django-countries = "*"
+django-money = "*"
+black = "*"
+flake8 = "*"
 
 [dev-packages]
 
