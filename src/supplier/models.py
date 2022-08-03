@@ -7,6 +7,7 @@ from core.choices import (
     FUEL_CHOICES,
     DRIVE_TYPE_CHOICES,
     BODY_TYPE_CHOICES,
+    COLOR_CHOICES,
 )
 import datetime
 
@@ -65,6 +66,8 @@ class Car(CommonPart):
             validators.MaxValueValidator(30),
         ]
     )
+    mileage = models.PositiveIntegerField()
+    color = models.CharField(max_length=15, choices=COLOR_CHOICES)
     is_abs = models.BooleanField(default=True)
     fuel = models.CharField(max_length=20, choices=FUEL_CHOICES)
     is_parking_sensors = models.BooleanField(default=True)

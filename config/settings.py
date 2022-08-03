@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "carshowroom",
-    "customer",
-    "supplier",
+
+    "src.carshowroom",
+    "src.customer",
+    "src.supplier",
+
     "rest_framework",
     "django_countries",
     "djmoney",
@@ -55,7 +57,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "car_showroom.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -73,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "car_showroom.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
