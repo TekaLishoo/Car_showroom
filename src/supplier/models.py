@@ -1,8 +1,8 @@
 from django.db import models
 from django_countries.fields import CountryField
 from django.core import validators
-from core.models import CommonPart
-from core.choices import (
+from src.core.models import CommonPart
+from src.core.choices import (
     TRANSMISSION_CHOICES,
     FUEL_CHOICES,
     DRIVE_TYPE_CHOICES,

@@ -1,7 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
-from core.models import CommonPart
-from core.wishes import default_showroom_wishes
+from src.core.models import CommonPart
+from src.core.wishes import default_showroom_wishes
 from django.core import validators
 from djmoney.models.fields import MoneyField
 
