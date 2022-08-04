@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-7)*#!$9h_k!v0d!wj2zfv=x9xp!#u(89g2!l3d9k1wvip!p-b5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -83,12 +83,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "carshowroom",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "postgres",
         "USER": "carshowroomuser",
         "PASSWORD": "car123showroom123",
-        "HOST": "localhost",
-        "PORT": "",
+        "HOST": "postgres",
+        "PORT": "5432",
     }
 }
 

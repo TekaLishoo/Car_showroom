@@ -1,0 +1,28 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=carshowroomuser
+      - POSTGRES_PASSWORD=car123showroom123
+
+  app:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - DJANGO_SECRET_KEY
+      - DATABASE_URL
+    volumes:
+      - .:/usr/local/src/webapp/src/
+    depends_on:
+      - postgres
+
+volumes:
+  pg-data:
+    driver: local
