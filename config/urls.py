@@ -14,8 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+from src.carshowroom.views import CarShowroomViewSet, CarShowroomPresenceViewSet, CarSellsViewSet, CarBuyersViewSet, \
+    CarShowroomSalesViewSet
+from src.supplier.views import SupplierViewSet, SupplierPresenceViewSet, SupplierSalesViewSet, CarViewSet, \
+    CarBrandViewSet, CarModelViewSet
+from src.customer.views import CustomerViewSet
+
+router = routers.SimpleRouter()
+router.register(r'carshowrooms', CarShowroomViewSet)
+router.register(r'carspresence', CarShowroomPresenceViewSet)
+router.register(r'carsells', CarSellsViewSet)
+router.register(r'carbuyers', CarBuyersViewSet)
+router.register(r'showroomsales', CarShowroomSalesViewSet)
+router.register(r'suppliers', SupplierViewSet)
+router.register(r'supplierpresence', SupplierPresenceViewSet)
+router.register(r'suppliersales', SupplierSalesViewSet)
+router.register(r'cars', CarViewSet)
+router.register(r'carbrands', CarBrandViewSet)
+router.register(r'carmodels', CarModelViewSet)
+router.register(r'customers', CustomerViewSet)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]

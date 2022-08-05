@@ -1,5 +1,6 @@
 [flake8]
 exclude =
+    migrations
     .git,
     .github,
     __pycache__,

@@ -9,7 +9,7 @@ from djmoney.models.fields import MoneyField
 class CarShowroom(CommonPart):
     name = models.CharField(max_length=100)
     location = CountryField(blank_label="(select country)")
-    wishes = models.JSONField(null=True, default=default_showroom_wishes)
+    wishes = models.JSONField(null=True, blank=True, default=default_showroom_wishes)
     wish_cars = models.ManyToManyField("supplier.Car", blank=True,
                                        through="CarsChoice")
     balance = MoneyField(

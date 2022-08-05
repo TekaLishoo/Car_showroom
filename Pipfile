@@ -11,6 +11,7 @@ django-countries = "*"
 django-money = "*"
 black = "*"
 flake8 = "*"
+pytest-django = "*"
 
 [dev-packages]
 
