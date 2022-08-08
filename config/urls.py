@@ -21,6 +21,10 @@ from src.carshowroom.views import CarShowroomViewSet, CarShowroomPresenceViewSet
 from src.supplier.views import SupplierViewSet, SupplierPresenceViewSet, SupplierSalesViewSet, CarViewSet, \
     CarBrandViewSet, CarModelViewSet
 from src.customer.views import CustomerViewSet
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.SimpleRouter()
 router.register(r'carshowrooms', CarShowroomViewSet)
@@ -39,4 +43,6 @@ router.register(r'customers', CustomerViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

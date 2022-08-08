@@ -12,6 +12,7 @@ django-money = "*"
 black = "*"
 flake8 = "*"
 pytest-django = "*"
+djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
 
 [dev-packages]
 
