@@ -25,6 +25,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework.schemas import get_schema_view
+
+from rest_framework.renderers import CoreJSONRenderer
+
+schema_view = get_schema_view(
+    title='A Different API',
+    renderer_classes=[CoreJSONRenderer]
+)
 
 router = routers.SimpleRouter()
 router.register(r'carshowrooms', CarShowroomViewSet)
@@ -45,4 +54,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('swagger/', schema_view),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
