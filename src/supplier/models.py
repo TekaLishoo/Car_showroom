@@ -13,6 +13,10 @@ import datetime
 
 
 class Supplier(CommonPart):
+    """
+    A model of a supplier.
+    """
+
     name = models.CharField(max_length=100)
     location = CountryField(blank_label="(select country)")
     year_foundation = models.IntegerField(
@@ -27,6 +31,10 @@ class Supplier(CommonPart):
 
 
 class SupplierCarsPresence(CommonPart):
+    """
+    Model performs which cars are sold by supplier.
+    """
+
     supplier = models.ForeignKey(
         Supplier, related_name="supplier_presence_supplier",
         on_delete=models.CASCADE
@@ -38,6 +46,10 @@ class SupplierCarsPresence(CommonPart):
 
 
 class SupplierSales(CommonPart):
+    """
+    A list of sales of supplier.
+    """
+
     title = models.CharField(max_length=200)
     description = models.TextField()
     supplier = models.ForeignKey(
@@ -53,6 +65,10 @@ class SupplierSales(CommonPart):
 
 
 class Car(CommonPart):
+    """
+    A model of a car.
+    """
+
     model = models.ForeignKey(
         "CarModel", related_name="car_model", on_delete=models.CASCADE
     )
@@ -87,6 +103,10 @@ class Car(CommonPart):
 
 
 class CarBrand(CommonPart):
+    """
+    A model of a car brand.
+    """
+
     brand = models.CharField(max_length=50)
 
     def __str__(self):
@@ -94,6 +114,10 @@ class CarBrand(CommonPart):
 
 
 class CarModel(CommonPart):
+    """
+    A model of a car model.
+    """
+
     brand = models.ForeignKey(
         CarBrand, related_name="carmodel_brand", on_delete=models.CASCADE
     )

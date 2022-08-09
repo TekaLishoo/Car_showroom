@@ -6,6 +6,10 @@ from djmoney.models.fields import MoneyField
 
 
 class Customer(CommonPart):
+    """
+    A model of a customer.
+    """
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=150)
     location = CountryField(blank_label="(select country)")
@@ -18,6 +22,10 @@ class Customer(CommonPart):
 
 
 class CustomerOffer(CommonPart):
+    """
+    A model of customer offer.
+    """
+
     buyer = models.ForeignKey(
         Customer, related_name="offer_buyer", on_delete=models.CASCADE
     )
