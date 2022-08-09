@@ -15,6 +15,9 @@ pytest-django = "*"
 djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
 django-rest-swagger = "*"
 django-debug-toolbar = "*"
+mypy = "*"
+pylint = "*"
+django-filter = "*"
 
 [dev-packages]
 

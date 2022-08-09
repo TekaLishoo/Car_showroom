@@ -7,6 +7,10 @@ from djmoney.models.fields import MoneyField
 
 
 class CarShowroom(CommonPart):
+    """
+    A model of a carshowroom.
+    """
+
     name = models.CharField(max_length=100)
     location = CountryField(blank_label="(select country)")
     wishes = models.JSONField(null=True, blank=True, default=default_showroom_wishes)
@@ -21,6 +25,12 @@ class CarShowroom(CommonPart):
 
 
 class CarsChoice(CommonPart):
+    """
+    Model performs a preferred cars and its suppliers for each carshowroom.
+
+    Records are created once carshowroom has been saved.
+    """
+
     showroom = models.ForeignKey(
         CarShowroom, related_name="choice_showroom", on_delete=models.CASCADE
     )
@@ -40,6 +50,10 @@ class CarsChoice(CommonPart):
 
 
 class CarShowroomPresence(CommonPart):
+    """
+    Model performs which cars are presence in carshoomroom.
+    """
+
     showroom = models.ForeignKey(
         CarShowroom, related_name="presence_showroom", on_delete=models.CASCADE
     )
@@ -57,6 +71,10 @@ class CarShowroomPresence(CommonPart):
 
 
 class CarSells(CommonPart):
+    """
+    A list of sells of carshowroom.
+    """
+
     showroom = models.ForeignKey(
         CarShowroom, related_name="carsells_showroom", on_delete=models.CASCADE
     )
@@ -73,6 +91,10 @@ class CarSells(CommonPart):
 
 
 class CarShowroomBuyers(CommonPart):
+    """
+    A list of customers of carshowroom.
+    """
+
     showroom = models.ForeignKey(
         CarShowroom, related_name="buyers_showroom", on_delete=models.CASCADE
     )
@@ -84,6 +106,10 @@ class CarShowroomBuyers(CommonPart):
 
 
 class CarShowroomSales(CommonPart):
+    """
+    A list of sales of carshowroom.
+    """
+
     title = models.CharField(max_length=200)
     description = models.TextField()
     showroom = models.ForeignKey(
