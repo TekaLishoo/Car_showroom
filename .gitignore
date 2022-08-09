@@ -2,5 +2,5 @@ db.sqlite3
 **/__pycache__/**
 *pyc
 *env
-.idea
-.pytest_cache
+.idea/
+.pytest_cache/
