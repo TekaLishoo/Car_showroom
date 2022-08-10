@@ -18,6 +18,7 @@ django-debug-toolbar = "*"
 mypy = "*"
 pylint = "*"
 django-filter = "*"
+celery = {extras = ["redis"], version = "*"}
 
 [dev-packages]
 
