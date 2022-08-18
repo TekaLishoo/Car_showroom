@@ -4,6 +4,7 @@ from src.core.models import CommonPart
 from src.core.wishes import default_showroom_wishes
 from django.core import validators
 from djmoney.models.fields import MoneyField
+from src.carshowroom.management.managers import CarShowRoomManager
 
 
 class CarShowroom(CommonPart):
@@ -19,6 +20,7 @@ class CarShowroom(CommonPart):
     balance = MoneyField(
         max_digits=19, decimal_places=4, default_currency="USD", default=500000
     )
+    margin = models.PositiveIntegerField(validators=[validators.MaxValueValidator(100)], default=5)
 
     def __str__(self):
         return f"{self.name}, {self.location}"
@@ -44,9 +46,13 @@ class CarsChoice(CommonPart):
         blank=True,
         on_delete=models.SET_NULL,
     )
+    price = models.PositiveIntegerField(null=True)
     discount = models.PositiveIntegerField(
         null=True, validators=[validators.MaxValueValidator(100)]
     )
+
+    def __str__(self):
+        return f"{self.showroom.name}, {self.car.model.model}, {self.wish_supplier.name}"
 
 
 class CarShowroomPresence(CommonPart):

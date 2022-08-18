@@ -25,6 +25,8 @@ class Supplier(CommonPart):
             validators.MaxValueValidator(datetime.date.today().year + 1),
         ]
     )
+    purchases_for_discount = models.PositiveIntegerField(default=5)
+    discount_regular_customer = models.PositiveIntegerField(validators=[validators.MaxValueValidator(100)], default=5)
 
     def __str__(self):
         return f"{self.name}, {self.year_foundation}, {self.location}"
@@ -44,6 +46,9 @@ class SupplierCarsPresence(CommonPart):
     )
     price = models.PositiveIntegerField()
 
+    def __str__(self):
+        return f"{self.supplier.name}, {self.car.model}, {self.price}"
+
 
 class SupplierSales(CommonPart):
     """
@@ -62,6 +67,9 @@ class SupplierSales(CommonPart):
     cars = models.ManyToManyField("Car")
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.supplier.name}, {self.discount}%, {self.date_start} - {self.date_end}"
 
 
 class Car(CommonPart):
@@ -122,3 +130,6 @@ class CarModel(CommonPart):
         CarBrand, related_name="carmodel_brand", on_delete=models.CASCADE
     )
     model = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.brand} {self.model}"

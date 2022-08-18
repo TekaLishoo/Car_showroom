@@ -19,6 +19,8 @@ mypy = "*"
 pylint = "*"
 django-filter = "*"
 celery = {extras = ["redis"], version = "*"}
+django-celery-beat = "*"
+python-dateutil = "*"
 
 [dev-packages]
 
