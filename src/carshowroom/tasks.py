@@ -43,7 +43,7 @@ def showroom_buy_cars():
                 # get amount of car to buy
                 try:
                     planned_num_cars = sells_history.get(car__id=car_id)['sum_amount']
-                except ValueError:
+                except CarSells.DoesNotExist:
                     planned_num_cars = 1
 
                 # best price with actual sales

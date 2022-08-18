@@ -50,9 +50,6 @@ class CarsChoice(CommonPart):
         null=True, validators=[validators.MaxValueValidator(100)]
     )
 
-    def __str__(self):
-        return f"{self.showroom.name}, {self.car.model.model}, {self.wish_supplier.name}"
-
 
 class CarShowroomPresence(CommonPart):
     """
@@ -73,6 +70,9 @@ class CarShowroomPresence(CommonPart):
         related_name="presence_showroom_supplier",
         on_delete=models.SET("supplier deleted"),
     )
+
+    def __str__(self):
+        return f"{self.showroom.name}, {self.car.model.model}, {self.amount}"
 
 
 class CarSells(CommonPart):

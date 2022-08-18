@@ -21,6 +21,7 @@ django-filter = "*"
 celery = {extras = ["redis"], version = "*"}
 django-celery-beat = "*"
 python-dateutil = "*"
+faker = "*"
 
 [dev-packages]
 

@@ -163,9 +163,9 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TIMEZONE = "Europe/Minsk"
 
-# CELERY_BEAT_SCHEDULE = {
-#     "sample_task": {
-#         "task": "src.carshowroom.tasks.showroom_buy_cars",
-#         "schedule": crontab(minute="*/1"),
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "src.carshowroom.tasks.showroom_buy_cars",
+        "schedule": crontab(minute="*/1"),
+    },
+}
