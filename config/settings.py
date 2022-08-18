@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from celery.schedules import crontab
-import src.carshowroom.tasks
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,10 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "src.carshowroom",
-    "src.customer",
-    "src.supplier",
-
     "rest_framework",
     "django_countries",
     "djmoney",
@@ -53,6 +48,10 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_filters",
     "django_celery_beat",
+
+    "src.carshowroom",
+    "src.customer",
+    "src.supplier",
 ]
 
 MIDDLEWARE = [
@@ -164,9 +163,9 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TIMEZONE = "Europe/Minsk"
 
-CELERY_BEAT_SCHEDULE = {
-    "sample_task": {
-        "task": "src.carshowroom.tasks.showroom_buy_cars",
-        "schedule": crontab(minute="*/1"),
-    },
-}
+# CELERY_BEAT_SCHEDULE = {
+#     "sample_task": {
+#         "task": "src.carshowroom.tasks.showroom_buy_cars",
+#         "schedule": crontab(minute="*/1"),
+#     },
+# }

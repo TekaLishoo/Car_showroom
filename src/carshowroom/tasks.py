@@ -1,10 +1,16 @@
-from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from django.db.models import Sum
 from djmoney.money import Money
 from decimal import Decimal
 from datetime import datetime
-from dateutil.relativedelta import *
+from dateutil.relativedelta import relativedelta
+from src.carshowroom.models import CarShowroom, CarSells, CarsChoice, CarShowroomPresence
+from src.carshowroom.service import (
+    showroom_find_best_price,
+    get_regular_customer_info,
+    sort_prices_according_all_discount,
+)
+from src.supplier.models import Supplier, Car
 
 
 @shared_task
@@ -13,11 +19,6 @@ def showroom_buy_cars():
     Task runs every 10 minutes.
     Showrooms buy cars from their wishlist
     """
-    from src.carshowroom.models import CarShowroom, CarSells, CarsChoice, CarShowroomPresence
-    from src.carshowroom.service import showroom_find_best_price, get_regular_customer_info, \
-        sort_prices_according_all_discount
-    from src.supplier.models import Supplier, Car
-
     # receive the history of car sells for last 2 months
     sells_history = CarSells.objects.values('car__id').annotate(sum_amount=Sum('amount')) \
         .filter(is_active=True, create_data__gte=datetime.today() + relativedelta(months=-2)) \
@@ -42,7 +43,7 @@ def showroom_buy_cars():
                 # get amount of car to buy
                 try:
                     planned_num_cars = sells_history.get(car__id=car_id)['sum_amount']
-                except:
+                except ValueError:
                     planned_num_cars = 1
 
                 # best price with actual sales
@@ -59,3 +60,8 @@ def showroom_buy_cars():
                     presence.price = best_total_price / planned_num_cars * (1 + showroom.margin / 100)
                     presence.supplier = Supplier.objects.get(id=best_supplier)
                     presence.save()
+
+
+@shared_task
+def create_random_suppliers():
+    return 'entered!!!'

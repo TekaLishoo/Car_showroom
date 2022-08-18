@@ -17,7 +17,7 @@ def showroom_find_best_price(car_id):
                                                        cars__id=car_id,
                                                        date_start__lte=datetime.datetime.now(),
                                                        date_end__gte=datetime.datetime.now()).discount
-        except:
+        except ValueError:
             offer_discount = 0
         prices[offer.supplier.id] = [offer.price, offer_discount]
     return sorted(prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100))
