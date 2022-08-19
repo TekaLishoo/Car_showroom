@@ -63,5 +63,37 @@ def showroom_buy_cars():
 
 
 @shared_task
-def create_random_suppliers():
-    return 'entered!!!'
+def check_profit_partnership():
+    """
+    Task runs every 60 minutes.
+    Checks if actual partnership is profit.
+    If not - changes a preferred supplier for particular showroom.
+    """
+    for showroom in CarShowroom.objects.prefetch_related('wish_cars', 'choice_showroom'):
+        regular_customer_info = get_regular_customer_info(showroom)  # check for regular customer discount
+
+        # make a list with cars to buy.
+        showroom_choice = showroom.wish_cars.values_list('id', flat=True)
+        if len(showroom_choice) != 0:
+            for car_id in showroom_choice:
+
+                # check sales of suppliers
+                sorted_prices = showroom_find_best_price(car_id)
+                for k, v in enumerate(sorted_prices):
+                    if sorted_prices[k][0] in list(regular_customer_info.keys()):
+                        sorted_prices[k][1].extend(regular_customer_info[sorted_prices[k][0]])
+
+                # best price with actual sales
+                best_supplier, best_total_price = sort_prices_according_all_discount(sorted_prices)
+                actual_supplier = showroom.choice_showroom.filter(car=car_id)
+                if best_supplier not in actual_supplier.values_list('wish_supplier__id', flat=True):
+                    qs_to_change = CarsChoice.objects.filter(showroom=showroom, car__id=car_id)
+                    qs_to_change.wish_supplier = Supplier.objects.get(id=best_supplier)
+                    qs_to_change.price = best_total_price
+                    discount = 0
+                    for offer in sorted_prices:
+                        if offer[0] == best_supplier:
+                            discount = offer[1][1]
+                    qs_to_change.discount = discount
+                    qs_to_change.update()
+

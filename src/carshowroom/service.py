@@ -46,7 +46,7 @@ def get_regular_customer_info(showroom):
     return number_sells_dict
 
 
-def sort_prices_according_all_discount(prices, cars_to_buy):
+def sort_prices_according_all_discount(prices, cars_to_buy=1):
     """
     Returns a supplier id with the best offer and a total price
     """

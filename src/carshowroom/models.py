@@ -50,6 +50,10 @@ class CarsChoice(CommonPart):
         null=True, validators=[validators.MaxValueValidator(100)]
     )
 
+    def __str__(self):
+        return f"{self.showroom}, {self.car.model.model}, {self.wish_supplier}"
+
+
 
 class CarShowroomPresence(CommonPart):
     """
