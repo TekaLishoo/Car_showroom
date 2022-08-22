@@ -38,3 +38,4 @@ class CustomerOffer(CommonPart):
             super(CustomerOffer, self).save(*args, **kwargs)
         else:
             raise ValueError("Price is higher than customer's balance")
+
