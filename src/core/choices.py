@@ -22,12 +22,12 @@ BODY_TYPE_CHOICES = (
     ("Crossover", "Crossover"),
 )
 COLOR_CHOICES = (
-    ('Black', 'Black'),
-    ('Grey', 'Grey'),
-    ('White', 'White'),
-    ('Maroon', 'Maroon'),
-    ('Brown', 'Brown'),
-    ('Blue', 'Blue'),
-    ('Red', 'Red'),
-    ('Green', 'Green'),
+    ("Black", "Black"),
+    ("Grey", "Grey"),
+    ("White", "White"),
+    ("Maroon", "Maroon"),
+    ("Brown", "Brown"),
+    ("Blue", "Blue"),
+    ("Red", "Red"),
+    ("Green", "Green"),
 )

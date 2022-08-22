@@ -14,10 +14,12 @@ class CarShowroom(CommonPart):
     name = models.CharField(max_length=100)
     location = CountryField(blank_label="(select country)")
     wishes = models.JSONField(null=True, blank=True, default=default_showroom_wishes)
-    wish_cars = models.ManyToManyField("supplier.Car", blank=True,
-                                       through="CarsChoice")
+    wish_cars = models.ManyToManyField("supplier.Car", blank=True, through="CarsChoice")
     balance = MoneyField(
         max_digits=19, decimal_places=4, default_currency="USD", default=500000
+    )
+    margin = models.PositiveIntegerField(
+        validators=[validators.MaxValueValidator(100)], default=5
     )
 
     def __str__(self):
@@ -44,9 +46,13 @@ class CarsChoice(CommonPart):
         blank=True,
         on_delete=models.SET_NULL,
     )
+    price = models.PositiveIntegerField(null=True)
     discount = models.PositiveIntegerField(
         null=True, validators=[validators.MaxValueValidator(100)]
     )
+
+    def __str__(self):
+        return f"{self.showroom}, {self.car.model.model}, {self.wish_supplier}"
 
 
 class CarShowroomPresence(CommonPart):
@@ -58,8 +64,7 @@ class CarShowroomPresence(CommonPart):
         CarShowroom, related_name="presence_showroom", on_delete=models.CASCADE
     )
     car = models.ForeignKey(
-        "supplier.Car", related_name="presence_showroom_car",
-        on_delete=models.CASCADE
+        "supplier.Car", related_name="presence_showroom_car", on_delete=models.CASCADE
     )
     amount = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
@@ -68,6 +73,9 @@ class CarShowroomPresence(CommonPart):
         related_name="presence_showroom_supplier",
         on_delete=models.SET("supplier deleted"),
     )
+
+    def __str__(self):
+        return f"{self.showroom.name}, {self.car.model.model}, {self.amount}"
 
 
 class CarSells(CommonPart):
@@ -99,8 +107,7 @@ class CarShowroomBuyers(CommonPart):
         CarShowroom, related_name="buyers_showroom", on_delete=models.CASCADE
     )
     buyer = models.ForeignKey(
-        "customer.Customer", related_name="buyers_customer",
-        on_delete=models.CASCADE
+        "customer.Customer", related_name="buyers_customer", on_delete=models.CASCADE
     )
     sum_amount = models.PositiveIntegerField()
 
@@ -113,8 +120,7 @@ class CarShowroomSales(CommonPart):
     title = models.CharField(max_length=200)
     description = models.TextField()
     showroom = models.ForeignKey(
-        CarShowroom, related_name="showroom_sales_showroom",
-        on_delete=models.CASCADE
+        CarShowroom, related_name="showroom_sales_showroom", on_delete=models.CASCADE
     )
     discount = models.PositiveIntegerField(
         validators=[validators.MaxValueValidator(100)]
