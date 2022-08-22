@@ -33,3 +33,9 @@ class CustomerOffer(CommonPart):
         "supplier.Car", related_name="offer_car", on_delete=models.CASCADE
     )
     max_price = models.PositiveIntegerField()
+
+    def save(self, *args, **kwargs):
+        if self.max_price <= self.buyer.balance.amount:
+            super(CustomerOffer, self).save(*args, **kwargs)
+        else:
+            raise ValueError("Price is higher than customer's balance")
