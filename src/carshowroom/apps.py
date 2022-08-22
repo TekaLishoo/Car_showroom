@@ -6,4 +6,4 @@ class CarshowroomConfig(AppConfig):
     name = "src.carshowroom"
 
     def ready(self):
-        import src.carshowroom.signals
+        import src.carshowroom.signals  # noqa F401

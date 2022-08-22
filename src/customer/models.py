@@ -13,8 +13,7 @@ class Customer(CommonPart):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=150)
     location = CountryField(blank_label="(select country)")
-    balance = MoneyField(max_digits=19, decimal_places=4,
-                         default_currency="USD")
+    balance = MoneyField(max_digits=19, decimal_places=4, default_currency="USD")
     wishes = models.JSONField(null=True, default=default_customer_wishes)
 
     def __str__(self):

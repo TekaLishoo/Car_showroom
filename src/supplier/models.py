@@ -26,7 +26,9 @@ class Supplier(CommonPart):
         ]
     )
     purchases_for_discount = models.PositiveIntegerField(default=5)
-    discount_regular_customer = models.PositiveIntegerField(validators=[validators.MaxValueValidator(100)], default=5)
+    discount_regular_customer = models.PositiveIntegerField(
+        validators=[validators.MaxValueValidator(100)], default=5
+    )
 
     def __str__(self):
         return f"{self.name}, {self.year_foundation}, {self.location}"
@@ -38,8 +40,7 @@ class SupplierCarsPresence(CommonPart):
     """
 
     supplier = models.ForeignKey(
-        Supplier, related_name="supplier_presence_supplier",
-        on_delete=models.CASCADE
+        Supplier, related_name="supplier_presence_supplier", on_delete=models.CASCADE
     )
     car = models.ForeignKey(
         "Car", related_name="supplier_presence_car", on_delete=models.CASCADE
@@ -58,8 +59,7 @@ class SupplierSales(CommonPart):
     title = models.CharField(max_length=200)
     description = models.TextField()
     supplier = models.ForeignKey(
-        Supplier, related_name="supplier_sales_supplier",
-        on_delete=models.CASCADE
+        Supplier, related_name="supplier_sales_supplier", on_delete=models.CASCADE
     )
     discount = models.PositiveIntegerField(
         validators=[validators.MaxValueValidator(100)]
@@ -82,8 +82,7 @@ class Car(CommonPart):
     )
     body_type = models.CharField(max_length=15, choices=BODY_TYPE_CHOICES)
     drive_type = models.CharField(max_length=15, choices=DRIVE_TYPE_CHOICES)
-    transmission = models.CharField(max_length=50,
-                                    choices=TRANSMISSION_CHOICES)
+    transmission = models.CharField(max_length=50, choices=TRANSMISSION_CHOICES)
     engine_size = models.FloatField(
         validators=[
             validators.MinValueValidator(0),
@@ -98,16 +97,11 @@ class Car(CommonPart):
     is_climate_control = models.BooleanField(default=True)
     is_cruise_control = models.BooleanField(default=True)
     is_heated_seats = models.BooleanField(default=False)
-    doors = models.PositiveIntegerField(
-        validators=[validators.MaxValueValidator(9)]
-    )
-    seats = models.PositiveIntegerField(
-        validators=[validators.MaxValueValidator(9)]
-    )
+    doors = models.PositiveIntegerField(validators=[validators.MaxValueValidator(9)])
+    seats = models.PositiveIntegerField(validators=[validators.MaxValueValidator(9)])
 
     def __str__(self):
-        return f"{self.model}, {self.body_type}, " \
-               f"{self.fuel}, {self.engine_size}"
+        return f"{self.model}, {self.body_type}, " f"{self.fuel}, {self.engine_size}"
 
 
 class CarBrand(CommonPart):

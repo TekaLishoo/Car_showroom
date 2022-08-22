@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os  # noqa F401
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "django_countries",
     "djmoney",
@@ -48,7 +47,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_filters",
     "django_celery_beat",
-
     "src.carshowroom",
     "src.customer",
     "src.supplier",
@@ -120,15 +118,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_FILTER_BACKENDS': (
-            'django_filters.rest_framework.DjangoFilterBackend',
-        ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
 
 # Internationalization
@@ -155,8 +149,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 if DEBUG:
     import socket
+
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
+        "127.0.0.1",
+        "10.0.2.2",
+    ]
 
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
@@ -164,12 +162,12 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TIMEZONE = "Europe/Minsk"
 
 CELERY_BEAT_SCHEDULE = {
-    # "buy_task": {
-    #     "task": "src.carshowroom.tasks.showroom_buy_cars",
-    #     "schedule": crontab(minute="*/1"),
-    # },
-    # "check_profit_task": {
-    #     "task": "src.carshowroom.tasks.check_profit_partnership",
-    #     "schedule": crontab(minute="*/2"),
-    # },
+    "buy_task": {
+        "task": "src.carshowroom.tasks.showroom_buy_cars",
+        "schedule": crontab(minute="*/1"),
+    },
+    "check_profit_task": {
+        "task": "src.carshowroom.tasks.check_profit_partnership",
+        "schedule": crontab(minute="*/60"),
+    },
 }

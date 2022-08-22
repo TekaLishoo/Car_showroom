@@ -7,13 +7,13 @@ from src.core.choices import BODY_TYPE_CHOICES, DRIVE_TYPE_CHOICES
 
 
 class Command(BaseCommand):
-    help = 'Create a given number of random customers'
+    help = "Create a given number of random customers"
 
     def add_arguments(self, parser):
-        parser.add_argument('amount', nargs='+', type=int)
+        parser.add_argument("amount", nargs="+", type=int)
 
     def handle(self, *args, **options):
-        for n in range(*options['amount']):
+        for n in range(*options["amount"]):
             customer = Customer()
             first_name = Faker().first_name()
             while len(first_name) >= 50:
@@ -33,4 +33,8 @@ class Command(BaseCommand):
             customer.wishes = wishes
             customer.save()
 
-        self.stdout.write(self.style.SUCCESS('Successfully created %s customers' % int(*options['amount'])))
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Successfully created %s customers" % int(*options["amount"])
+            )
+        )

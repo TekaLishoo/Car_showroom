@@ -7,13 +7,13 @@ from src.core.choices import BODY_TYPE_CHOICES, DRIVE_TYPE_CHOICES
 
 
 class Command(BaseCommand):
-    help = 'Create a given number of random showrooms'
+    help = "Create a given number of random showrooms"
 
     def add_arguments(self, parser):
-        parser.add_argument('amount', nargs='+', type=int)
+        parser.add_argument("amount", nargs="+", type=int)
 
     def handle(self, *args, **options):
-        for n in range(*options['amount']):
+        for n in range(*options["amount"]):
             showroom = CarShowroom()
             name = Faker().word().capitalize()
             while len(name) >= 100:
@@ -29,4 +29,8 @@ class Command(BaseCommand):
             showroom.margin = choice(range(1, 20))
             showroom.save()
 
-        self.stdout.write(self.style.SUCCESS('Successfully created %s showrooms' % int(*options['amount'])))
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Successfully created %s showrooms" % int(*options["amount"])
+            )
+        )
