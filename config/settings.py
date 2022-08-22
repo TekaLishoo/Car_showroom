@@ -162,12 +162,12 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TIMEZONE = "Europe/Minsk"
 
 CELERY_BEAT_SCHEDULE = {
-    # "buy_task": {
-    #     "task": "src.carshowroom.tasks.showroom_buy_cars",
-    #     "schedule": crontab(minute="*/1"),
-    # },
-    # "check_profit_task": {
-    #     "task": "src.carshowroom.tasks.check_profit_partnership",
-    #     "schedule": crontab(minute="*/60"),
-    # },
+    "buy_task": {
+        "task": "src.carshowroom.tasks.showroom_buy_cars",
+        "schedule": crontab(minute="*/1"),
+    },
+    "check_profit_task": {
+        "task": "src.carshowroom.tasks.check_profit_partnership",
+        "schedule": crontab(minute="*/60"),
+    },
 }
