@@ -11,14 +11,14 @@ def showroom_find_best_price(car_id):
     and a list of price and discount (sorted in profitable order)
     """
     prices = dict()
-    for offer in SupplierCarsPresence.objects.filter(is_active=True, car__id=car_id):
-        try:
-            offer_discount = SupplierSales.objects.get(is_active=True, supplier=offer.supplier,
-                                                       cars__id=car_id,
-                                                       date_start__lte=datetime.datetime.now(),
-                                                       date_end__gte=datetime.datetime.now()).discount
-        except SupplierSales.DoesNotExist:
-            offer_discount = 0
+    for offer in SupplierCarsPresence.objects.filter(is_active=True, car__id=car_id).select_related('supplier'):
+        offer_discount = 0
+        for sale in offer.supplier.supplier_sales_supplier.filter(is_active=True,
+                                                                  date_start__lte=datetime.datetime.now(),
+                                                                  date_end__gte=datetime.datetime.now()
+                                                                  ).prefetch_related('cars'):
+            if car_id in sale.cars.values_list('id', flat=True):
+                offer_discount = sale.discount
         prices[offer.supplier.id] = [offer.price, offer_discount]
     return sorted(prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100))
 

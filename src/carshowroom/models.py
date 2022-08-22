@@ -54,7 +54,6 @@ class CarsChoice(CommonPart):
         return f"{self.showroom}, {self.car.model.model}, {self.wish_supplier}"
 
 
-
 class CarShowroomPresence(CommonPart):
     """
     Model performs which cars are presence in carshoomroom.
