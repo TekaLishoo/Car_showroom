@@ -23,35 +23,36 @@ def customer_buy_car(buyer_id, car_id, max_price):
             if car_id in sale.cars.values_list("id", flat=True):
                 offer_discount = sale.discount
         prices[offer.showroom.id] = [offer.price, offer_discount]
-    best_offer = sorted(prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100))[0]
-    best_showroom_offer = offers.filter(showroom__id=best_offer[0]).first()
-    best_price = best_offer[1][0] * (1 - best_offer[1][1] / 100)
-    actual_customer = Customer.objects.get(id=buyer_id)
+    if len(prices) != 0:
+        best_offer = sorted(prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100))[0]
+        best_showroom_offer = offers.filter(showroom__id=best_offer[0]).first()
+        best_price = best_offer[1][0] * (1 - best_offer[1][1] / 100)
+        actual_customer = Customer.objects.get(id=buyer_id)
 
-    # if balance allows customer will buy a car
-    if best_price <= actual_customer.balance.amount and best_price <= max_price:
-        actual_customer.balance = Money(
-            actual_customer.balance.amount - Decimal(best_price), "USD"
-        )
-        actual_customer.save()
+        # if balance allows customer will buy a car
+        if best_price <= actual_customer.balance.amount and best_price <= float(max_price):
+            actual_customer.balance = Money(
+                actual_customer.balance.amount - Decimal(best_price), "USD"
+            )
+            actual_customer.save()
 
-        # increase showroom balance
-        best_showroom_offer.showroom.balance = Money(
-            best_showroom_offer.showroom.balance.amount + Decimal(best_price), "USD"
-        )
-        best_showroom_offer.showroom.save()
+            # increase showroom balance
+            best_showroom_offer.showroom.balance = Money(
+                best_showroom_offer.showroom.balance.amount + Decimal(best_price), "USD"
+            )
+            best_showroom_offer.showroom.save()
 
-        # decrease amount CarShowroomPresence
-        best_showroom_offer.amount -= 1
-        if best_showroom_offer.amount == 0:
-            best_showroom_offer.is_active = False
-        best_showroom_offer.save()
+            # decrease amount CarShowroomPresence
+            best_showroom_offer.amount -= 1
+            if best_showroom_offer.amount == 0:
+                best_showroom_offer.is_active = False
+            best_showroom_offer.save()
 
-        # add to CarSells
-        car_sell = CarSells()
-        car_sell.showroom = best_showroom_offer.showroom
-        car_sell.buyer = actual_customer
-        car_sell.car = best_showroom_offer.car
-        car_sell.amount = 1
-        car_sell.price = best_price
-        car_sell.save()
+            # add to CarSells
+            car_sell = CarSells()
+            car_sell.showroom = best_showroom_offer.showroom
+            car_sell.buyer = actual_customer
+            car_sell.car = best_showroom_offer.car
+            car_sell.amount = 1
+            car_sell.price = best_price
+            car_sell.save()
