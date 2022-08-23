@@ -33,7 +33,7 @@ from src.supplier.views import (
     CarBrandViewSet,
     CarModelViewSet,
 )
-from src.customer.views import CustomerViewSet
+from src.customer.views import CustomerViewSet, CustomerOfferViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -60,6 +60,7 @@ router.register(r"cars", CarViewSet)
 router.register(r"carbrands", CarBrandViewSet)
 router.register(r"carmodels", CarModelViewSet)
 router.register(r"customers", CustomerViewSet)
+router.register(r"customeroffers", CustomerOfferViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -67,7 +68,8 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("swagger/", schema_view),
-    # path("__debug__/", include("debug_toolbar.urls")),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.jwt")),
 ]
 
 if settings.DEBUG:

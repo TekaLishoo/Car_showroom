@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.db import transaction
 from django.dispatch import receiver
 from src.customer.tasks import customer_buy_car
+from src.customer.models import Customer
 
 
 @receiver(post_save, sender="customer.CustomerOffer")
@@ -20,3 +22,12 @@ def customeroffer_after_saving(sender, instance, **kwargs):
             )
         )
     )
+
+#
+# @receiver(post_save, sender=User)
+# def create_customer(sender, instance, created, **kwargs):
+#     if created:
+#         Customer.objects.create(user=instance)
+#     instance.customer.save()
+
+
