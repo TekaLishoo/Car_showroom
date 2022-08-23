@@ -14,4 +14,4 @@ class CustomerOfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerOffer
         fields = "__all__"
-        read_only_fields = ("buyer")
+        read_only_fields = ("buyer",)
