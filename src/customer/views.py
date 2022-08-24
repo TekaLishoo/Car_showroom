@@ -1,7 +1,7 @@
 from django.shortcuts import render  # noqa F401
-from rest_framework import mixins, viewsets
-from .serializers import CustomerSerializer
-from .models import Customer
+from rest_framework import mixins, viewsets, permissions
+from .serializers import CustomerSerializer, CustomerOfferSerializer
+from .models import Customer, CustomerOffer
 from .filters import CustomerFilter
 from django_filters import rest_framework as filters
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -26,3 +26,17 @@ class CustomerViewSet(
         "balance",
     ]
     search_fields = ["first_name", "last_name"]
+
+
+class CustomerOfferViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = CustomerOffer.objects.all()
+    serializer_class = CustomerOfferSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
