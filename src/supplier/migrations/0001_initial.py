@@ -10,117 +10,291 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Car',
+            name="Car",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('body_type', models.CharField(choices=[('Sedan', 'Sedan'), ('Hatchback', 'Hatchback'), ('Compact', 'Compact'), ('Pickup', 'Pickup'), ('Sport_coupe', 'Sport coupe'), ('Crossover', 'Crossover')], max_length=15)),
-                ('drive_type', models.CharField(choices=[('Rear', 'Rear drive'), ('Front-wheel', 'Front-wheel drive'), ('Four-wheel', 'Four-wheel drive')], max_length=15)),
-                ('transmission', models.CharField(choices=[('Manual', 'Manual transmission'), ('Auto', 'Automatic transmission')], max_length=50)),
-                ('engine_size', models.FloatField(validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(30)])),
-                ('mileage', models.PositiveIntegerField()),
-                ('color', models.CharField(choices=[('Black', 'Black'), ('Grey', 'Grey'), ('White', 'White'), ('Maroon', 'Maroon'), ('Brown', 'Brown'), ('Blue', 'Blue'), ('Red', 'Red'), ('Green', 'Green')], max_length=15)),
-                ('is_abs', models.BooleanField(default=True)),
-                ('fuel', models.CharField(choices=[('Petrol', 'Petrol'), ('Diesel', 'Diesel'), ('Electric', 'Electric'), ('Hybrid', 'Hybrid')], max_length=20)),
-                ('is_parking_sensors', models.BooleanField(default=True)),
-                ('is_climate_control', models.BooleanField(default=True)),
-                ('is_cruise_control', models.BooleanField(default=True)),
-                ('is_heated_seats', models.BooleanField(default=False)),
-                ('doors', models.PositiveIntegerField(validators=[django.core.validators.MaxValueValidator(9)])),
-                ('seats', models.PositiveIntegerField(validators=[django.core.validators.MaxValueValidator(9)])),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                (
+                    "body_type",
+                    models.CharField(
+                        choices=[
+                            ("Sedan", "Sedan"),
+                            ("Hatchback", "Hatchback"),
+                            ("Compact", "Compact"),
+                            ("Pickup", "Pickup"),
+                            ("Sport_coupe", "Sport coupe"),
+                            ("Crossover", "Crossover"),
+                        ],
+                        max_length=15,
+                    ),
+                ),
+                (
+                    "drive_type",
+                    models.CharField(
+                        choices=[
+                            ("Rear", "Rear drive"),
+                            ("Front-wheel", "Front-wheel drive"),
+                            ("Four-wheel", "Four-wheel drive"),
+                        ],
+                        max_length=15,
+                    ),
+                ),
+                (
+                    "transmission",
+                    models.CharField(
+                        choices=[
+                            ("Manual", "Manual transmission"),
+                            ("Auto", "Automatic transmission"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                (
+                    "engine_size",
+                    models.FloatField(
+                        validators=[
+                            django.core.validators.MinValueValidator(0),
+                            django.core.validators.MaxValueValidator(30),
+                        ]
+                    ),
+                ),
+                ("mileage", models.PositiveIntegerField()),
+                (
+                    "color",
+                    models.CharField(
+                        choices=[
+                            ("Black", "Black"),
+                            ("Grey", "Grey"),
+                            ("White", "White"),
+                            ("Maroon", "Maroon"),
+                            ("Brown", "Brown"),
+                            ("Blue", "Blue"),
+                            ("Red", "Red"),
+                            ("Green", "Green"),
+                        ],
+                        max_length=15,
+                    ),
+                ),
+                ("is_abs", models.BooleanField(default=True)),
+                (
+                    "fuel",
+                    models.CharField(
+                        choices=[
+                            ("Petrol", "Petrol"),
+                            ("Diesel", "Diesel"),
+                            ("Electric", "Electric"),
+                            ("Hybrid", "Hybrid"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("is_parking_sensors", models.BooleanField(default=True)),
+                ("is_climate_control", models.BooleanField(default=True)),
+                ("is_cruise_control", models.BooleanField(default=True)),
+                ("is_heated_seats", models.BooleanField(default=False)),
+                (
+                    "doors",
+                    models.PositiveIntegerField(
+                        validators=[django.core.validators.MaxValueValidator(9)]
+                    ),
+                ),
+                (
+                    "seats",
+                    models.PositiveIntegerField(
+                        validators=[django.core.validators.MaxValueValidator(9)]
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='CarBrand',
+            name="CarBrand",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('brand', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("brand", models.CharField(max_length=50)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Supplier',
+            name="Supplier",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('name', models.CharField(max_length=100)),
-                ('location', django_countries.fields.CountryField(max_length=2)),
-                ('year_foundation', models.IntegerField(validators=[django.core.validators.MinValueValidator(1400), django.core.validators.MaxValueValidator(2023)])),
-                ('purchases_for_discount', models.PositiveIntegerField(default=5)),
-                ('discount_regular_customer', models.PositiveIntegerField(default=5, validators=[django.core.validators.MaxValueValidator(100)])),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("name", models.CharField(max_length=100)),
+                ("location", django_countries.fields.CountryField(max_length=2)),
+                (
+                    "year_foundation",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1400),
+                            django.core.validators.MaxValueValidator(2023),
+                        ]
+                    ),
+                ),
+                ("purchases_for_discount", models.PositiveIntegerField(default=5)),
+                (
+                    "discount_regular_customer",
+                    models.PositiveIntegerField(
+                        default=5,
+                        validators=[django.core.validators.MaxValueValidator(100)],
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='SupplierSales',
+            name="SupplierSales",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('title', models.CharField(max_length=200)),
-                ('description', models.TextField()),
-                ('discount', models.PositiveIntegerField(validators=[django.core.validators.MaxValueValidator(100)])),
-                ('date_start', models.DateTimeField()),
-                ('date_end', models.DateTimeField()),
-                ('cars', models.ManyToManyField(to='supplier.car')),
-                ('supplier', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='supplier_sales_supplier', to='supplier.supplier')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("title", models.CharField(max_length=200)),
+                ("description", models.TextField()),
+                (
+                    "discount",
+                    models.PositiveIntegerField(
+                        validators=[django.core.validators.MaxValueValidator(100)]
+                    ),
+                ),
+                ("date_start", models.DateTimeField()),
+                ("date_end", models.DateTimeField()),
+                ("cars", models.ManyToManyField(to="supplier.car")),
+                (
+                    "supplier",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="supplier_sales_supplier",
+                        to="supplier.supplier",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='SupplierCarsPresence',
+            name="SupplierCarsPresence",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('price', models.PositiveIntegerField()),
-                ('car', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='supplier_presence_car', to='supplier.car')),
-                ('supplier', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='supplier_presence_supplier', to='supplier.supplier')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("price", models.PositiveIntegerField()),
+                (
+                    "car",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="supplier_presence_car",
+                        to="supplier.car",
+                    ),
+                ),
+                (
+                    "supplier",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="supplier_presence_supplier",
+                        to="supplier.supplier",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='CarModel',
+            name="CarModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('create_data', models.DateField(auto_now_add=True)),
-                ('update_data', models.DateField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('model', models.CharField(max_length=50)),
-                ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='carmodel_brand', to='supplier.carbrand')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("create_data", models.DateField(auto_now_add=True)),
+                ("update_data", models.DateField(auto_now=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("model", models.CharField(max_length=50)),
+                (
+                    "brand",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="carmodel_brand",
+                        to="supplier.carbrand",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='car',
-            name='model',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='car_model', to='supplier.carmodel'),
+            model_name="car",
+            name="model",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="car_model",
+                to="supplier.carmodel",
+            ),
         ),
     ]

@@ -48,7 +48,11 @@ class ShowroomNumberOfSellsSerializer(serializers.ModelSerializer):
         fields = ("number_of_sales",)
 
     def get_number_of_sales(self, *args, **kwargs):
-        return CarSells.objects.filter(showroom=self.context['showroom_id']).values('showroom').annotate(Sum('amount'))
+        return (
+            CarSells.objects.filter(showroom=self.context["showroom_id"])
+            .values("showroom")
+            .annotate(Sum("amount"))
+        )
 
 
 class ShowroomProfitSerializer(serializers.ModelSerializer):
@@ -59,8 +63,11 @@ class ShowroomProfitSerializer(serializers.ModelSerializer):
         fields = ("profit",)
 
     def get_profit(self, *args, **kwargs):
-        return CarSells.objects.filter(showroom=self.context['showroom_id']).values('showroom').annotate(
-            profit_sum=Sum(F('amount')*F('price')))
+        return (
+            CarSells.objects.filter(showroom=self.context["showroom_id"])
+            .values("showroom")
+            .annotate(profit_sum=Sum(F("amount") * F("price")))
+        )
 
 
 class ShowroomUniqueCustomersSerializer(serializers.ModelSerializer):
@@ -71,8 +78,11 @@ class ShowroomUniqueCustomersSerializer(serializers.ModelSerializer):
         fields = ("unique_customers",)
 
     def get_unique_customers(self, *args, **kwargs):
-        return CarSells.objects.filter(showroom=self.context['showroom_id'])\
-            .values('buyer__first_name', 'buyer__last_name').distinct()
+        return (
+            CarSells.objects.filter(showroom=self.context["showroom_id"])
+            .values("buyer__first_name", "buyer__last_name")
+            .distinct()
+        )
 
 
 class ShowroomByLocationSerializer(serializers.ModelSerializer):
@@ -83,7 +93,7 @@ class ShowroomByLocationSerializer(serializers.ModelSerializer):
         fields = ("showrooms_location",)
 
     def get_showrooms_location(self, *args, **kwargs):
-        return CarShowroom.objects.values('location').annotate(Count('id'))
+        return CarShowroom.objects.values("location").annotate(Count("id"))
 
 
 class ShowroomUniqueSuppliersSerializer(serializers.ModelSerializer):
@@ -94,8 +104,11 @@ class ShowroomUniqueSuppliersSerializer(serializers.ModelSerializer):
         fields = ("unique_suppliers",)
 
     def get_unique_suppliers(self, *args, **kwargs):
-        return CarShowroomPresence.objects.filter(showroom=self.context['showroom_id'])\
-            .values('supplier__name').distinct()
+        return (
+            CarShowroomPresence.objects.filter(showroom=self.context["showroom_id"])
+            .values("supplier__name")
+            .distinct()
+        )
 
 
 class CarsBoughtAmountSerializer(serializers.ModelSerializer):
@@ -106,7 +119,11 @@ class CarsBoughtAmountSerializer(serializers.ModelSerializer):
         fields = ("amount_cars",)
 
     def get_amount_cars(self, *args, **kwargs):
-        return CarSells.objects.values('car').annotate(Sum('amount')).order_by('-amount__sum')
+        return (
+            CarSells.objects.values("car")
+            .annotate(Sum("amount"))
+            .order_by("-amount__sum")
+        )
 
 
 class CustomerSpentMoneySerializer(serializers.ModelSerializer):
@@ -117,4 +134,8 @@ class CustomerSpentMoneySerializer(serializers.ModelSerializer):
         fields = ("spent_money",)
 
     def get_spent_money(self, *args, **kwargs):
-        return CarSells.objects.values('buyer').annotate(spent_sum=Sum(F('amount')*F('price'))).order_by('-spent_sum')
+        return (
+            CarSells.objects.values("buyer")
+            .annotate(spent_sum=Sum(F("amount") * F("price")))
+            .order_by("-spent_sum")
+        )

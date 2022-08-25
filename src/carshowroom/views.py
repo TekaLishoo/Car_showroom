@@ -47,40 +47,46 @@ class CarShowroomViewSet(
     ordering_fields = ["name", "create_time", "update_time", "location", "balance"]
     search_fields = ["name", "wishes", "wish_cars__choice_car__car__model__model"]
 
-    @action(methods=['get'], detail=True, serializer_class=ShowroomNumberOfSellsSerializer)
+    @action(
+        methods=["get"], detail=True, serializer_class=ShowroomNumberOfSellsSerializer
+    )
     def number_of_sells(self, request, pk=None):
         """
         <api/carshowrooms/<pk>/number_of_sells/
         will return a sum of sells for this particular showroom
         """
-        serializer = self.get_serializer(data=request.data, context={'showroom_id': pk})
+        serializer = self.get_serializer(data=request.data, context={"showroom_id": pk})
         if serializer.is_valid():
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
 
-    @action(methods=['get'], detail=True, serializer_class=ShowroomProfitSerializer)
+    @action(methods=["get"], detail=True, serializer_class=ShowroomProfitSerializer)
     def profit(self, request, pk=None):
         """
         <api/carshowrooms/<pk>/profit/
         will return a total profit for this particular showroom
         """
-        serializer = self.get_serializer(data=request.data, context={'showroom_id': pk})
+        serializer = self.get_serializer(data=request.data, context={"showroom_id": pk})
         if serializer.is_valid():
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
 
-    @action(methods=['get'], detail=True, serializer_class=ShowroomUniqueCustomersSerializer)
+    @action(
+        methods=["get"], detail=True, serializer_class=ShowroomUniqueCustomersSerializer
+    )
     def unique_customers(self, request, pk=None):
         """
         <api/carshowrooms/<pk>/unique_customers/
         will return all unique customers for this particular showroom
         """
-        serializer = self.get_serializer(data=request.data, context={'showroom_id': pk})
+        serializer = self.get_serializer(data=request.data, context={"showroom_id": pk})
         if serializer.is_valid():
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
 
-    @action(methods=['get'], detail=False, serializer_class=ShowroomByLocationSerializer)
+    @action(
+        methods=["get"], detail=False, serializer_class=ShowroomByLocationSerializer
+    )
     def by_locations(self, request, pk=None):
         """
         <api/carshowrooms/by_locations/
@@ -92,13 +98,15 @@ class CarShowroomViewSet(
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
 
-    @action(methods=['get'], detail=True, serializer_class=ShowroomUniqueSuppliersSerializer)
+    @action(
+        methods=["get"], detail=True, serializer_class=ShowroomUniqueSuppliersSerializer
+    )
     def unique_suppliers(self, request, pk=None):
         """
         <api/carshowrooms/<pk>/unique_suppliers/
         will return all unique suppliers this particular showroom was dealing with
         """
-        serializer = self.get_serializer(data=request.data, context={'showroom_id': pk})
+        serializer = self.get_serializer(data=request.data, context={"showroom_id": pk})
         if serializer.is_valid():
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
@@ -128,7 +136,7 @@ class CarSellsViewSet(
     queryset = CarSells.objects.all()
     serializer_class = CarSellsSerializer
 
-    @action(methods=['get'], detail=False, serializer_class=CarsBoughtAmountSerializer)
+    @action(methods=["get"], detail=False, serializer_class=CarsBoughtAmountSerializer)
     def total(self, request, pk=None):
         """
         <api/carsells/total/
@@ -140,7 +148,9 @@ class CarSellsViewSet(
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
 
-    @action(methods=['get'], detail=False, serializer_class=CustomerSpentMoneySerializer)
+    @action(
+        methods=["get"], detail=False, serializer_class=CustomerSpentMoneySerializer
+    )
     def profit_customers(self, request, pk=None):
         """
         <api/carsells/profit_customers/
@@ -151,6 +161,7 @@ class CarSellsViewSet(
         if serializer.is_valid():
             data = serializer.data
             return Response(data, status=status.HTTP_200_OK)
+
 
 class CarBuyersViewSet(
     mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet

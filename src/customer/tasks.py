@@ -24,13 +24,17 @@ def customer_buy_car(buyer_id, car_id, max_price):
                 offer_discount = sale.discount
         prices[offer.showroom.id] = [offer.price, offer_discount]
     if len(prices) != 0:
-        best_offer = sorted(prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100))[0]
+        best_offer = sorted(
+            prices.items(), key=lambda x: x[1][0] * (1 - x[1][1] / 100)
+        )[0]
         best_showroom_offer = offers.filter(showroom__id=best_offer[0]).first()
         best_price = best_offer[1][0] * (1 - best_offer[1][1] / 100)
         actual_customer = Customer.objects.get(id=buyer_id)
 
         # if balance allows customer will buy a car
-        if best_price <= actual_customer.balance.amount and best_price <= float(max_price):
+        if best_price <= actual_customer.balance.amount and best_price <= float(
+            max_price
+        ):
             actual_customer.balance = Money(
                 actual_customer.balance.amount - Decimal(best_price), "USD"
             )
