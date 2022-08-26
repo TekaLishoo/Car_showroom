@@ -18,4 +18,7 @@ class Command(BaseCommand):
         customer_offer.save()
 
         self.stdout.write(
-            self.style.SUCCESS("Successfully created customer offer for %s" % customer_offer.buyer))
+            self.style.SUCCESS(
+                "Successfully created customer offer for %s" % customer_offer.buyer
+            )
+        )

@@ -1,13 +1,10 @@
 import pytest
 from django.urls import reverse
-from src.carshowroom.service import sort_prices_according_all_discount, showroom_find_best_price
-from src.supplier.models import (
-    Supplier,
-    Car,
-    CarModel,
-    CarBrand,
-    SupplierCarsPresence
+from src.carshowroom.service import (
+    sort_prices_according_all_discount,
+    showroom_find_best_price,
 )
+from src.supplier.models import Supplier, Car, CarModel, CarBrand, SupplierCarsPresence
 from src.core.choices import (
     TRANSMISSION_CHOICES,
     FUEL_CHOICES,
@@ -49,29 +46,41 @@ def example_prices():
 
 @pytest.fixture
 def example_db():
-    suppliers = Supplier.objects.bulk_create([
-        Supplier(name='TestSupplier1', location='AD', year_foundation=1900),
-        Supplier(name='TestSupplier2', location='AT', year_foundation=2000),
-        Supplier(name='TestSupplier3', location='NZ', year_foundation=2010),
-        Supplier(name='TestSupplier4', location='PL', year_foundation=1980),
-        Supplier(name='TestSupplier5', location='GR', year_foundation=2005),
-    ])
-    brands = CarBrand.objects.bulk_create([
-        CarBrand(brand='Brand1', ),
-        CarBrand(brand='Brand2', ),
-        CarBrand(brand='Brand3', ),
-    ])
-    models = CarModel.objects.bulk_create([
-        CarModel(brand=brands[0], model='Model1'),
-        CarModel(brand=brands[0], model='Model2'),
-        CarModel(brand=brands[0], model='Model3'),
-        CarModel(brand=brands[1], model='Model4'),
-        CarModel(brand=brands[1], model='Model5'),
-        CarModel(brand=brands[1], model='Model6'),
-        CarModel(brand=brands[2], model='Model7'),
-        CarModel(brand=brands[2], model='Model8'),
-        CarModel(brand=brands[2], model='Model9'),
-    ])
+    suppliers = Supplier.objects.bulk_create(
+        [
+            Supplier(name="TestSupplier1", location="AD", year_foundation=1900),
+            Supplier(name="TestSupplier2", location="AT", year_foundation=2000),
+            Supplier(name="TestSupplier3", location="NZ", year_foundation=2010),
+            Supplier(name="TestSupplier4", location="PL", year_foundation=1980),
+            Supplier(name="TestSupplier5", location="GR", year_foundation=2005),
+        ]
+    )
+    brands = CarBrand.objects.bulk_create(
+        [
+            CarBrand(
+                brand="Brand1",
+            ),
+            CarBrand(
+                brand="Brand2",
+            ),
+            CarBrand(
+                brand="Brand3",
+            ),
+        ]
+    )
+    models = CarModel.objects.bulk_create(
+        [
+            CarModel(brand=brands[0], model="Model1"),
+            CarModel(brand=brands[0], model="Model2"),
+            CarModel(brand=brands[0], model="Model3"),
+            CarModel(brand=brands[1], model="Model4"),
+            CarModel(brand=brands[1], model="Model5"),
+            CarModel(brand=brands[1], model="Model6"),
+            CarModel(brand=brands[2], model="Model7"),
+            CarModel(brand=brands[2], model="Model8"),
+            CarModel(brand=brands[2], model="Model9"),
+        ]
+    )
     for model in models:
         Car.objects.create(
             model=model,

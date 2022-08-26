@@ -23,11 +23,10 @@ def customeroffer_after_saving(sender, instance, **kwargs):
         )
     )
 
+
 #
 # @receiver(post_save, sender=User)
 # def create_customer(sender, instance, created, **kwargs):
 #     if created:
 #         Customer.objects.create(user=instance)
 #     instance.customer.save()
-
-
